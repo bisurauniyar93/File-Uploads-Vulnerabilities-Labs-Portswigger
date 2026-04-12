@@ -38,7 +38,6 @@ Path traversal in the filename allowed bypassing the upload directory restrictio
 ![WhatsApp Image 2026-04-12 at 15 52 13(4)](https://github.com/user-attachments/assets/29de54e2-fcc8-4109-a367-c44be01c41a1)
 ![WhatsApp Image 2026-04-12 at 15 52 13(5)](https://github.com/user-attachments/assets/dddbd5a0-9ff8-42b8-ae10-043044266a70)
 ![WhatsApp Image 2026-04-12 at 15 52 13(6)](https://github.com/user-attachments/assets/7d8ad5f8-0b52-4b2f-b9fc-d6a0979d4c57)
-![WhatsApp Image 2026-04-12 at 15 52 13(7)](https://github.com/user-attachments/assets/d46afb2a-dabf-4f33-b4e8-b39980484e04)
 
 ## Lesson Learned
 - File upload restrictions can be bypassed using path traversal.
